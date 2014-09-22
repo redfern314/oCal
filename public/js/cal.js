@@ -59,7 +59,7 @@ $(function() {
         editable: false, // users cannot change events through UI
         eventLimit: true, // allow "more" link when too many events
         viewRender: viewChange, // called when date range is changed
-        height: 'auto', // no scrollbar
+        height: 650, // no scrollbar
         dayClick: dayClick, // change view to that day when clicked
         eventClick: eventClick
     });
