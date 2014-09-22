@@ -26,7 +26,7 @@
       <MailboxDataArray>
         <t:MailboxData>
           <t:Email>
-            <t:Address>###USERNAME###@students.olin.edu</t:Address>
+            <t:Address>###USERNAME###</t:Address>
           </t:Email>
           <t:AttendeeType>Required</t:AttendeeType>
           <t:ExcludeConflicts>false</t:ExcludeConflicts>

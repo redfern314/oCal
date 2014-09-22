@@ -47,7 +47,7 @@ app.post("/cal",function(req,res){
     console.log(req.body);
     var extension = (req.body.extension=="student"?"@students.olin.edu":"@olin.edu");
     var username = req.body.first+"."+req.body.last+extension;
-    ews.availability(extension,req.body.startdate,req.body.enddate,req.body.starttime,req.body.endtime,function (data){
+    ews.availability(username,req.body.startdate,req.body.enddate,req.body.starttime,req.body.endtime,function (data){
         console.log(pd.xml(data));
         xml2json(data,function (err,jsondata) {
             // console.log(pd.json(JSON.stringify(jsondata["soap:Envelope"]["soap:Body"][0]["GetUserAvailabilityResponse"][0])));
