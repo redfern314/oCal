@@ -1,68 +1,43 @@
+var startdate;
+var enddate;
+var starttime;
+var endtime;
+
+var getCal = function () {
+    var first = $('#firsttext').val();
+    var last = $('#lasttext').val();
+    $('#calendar').fullCalendar('removeEvents');
+    $.post('/cal',{'first':first,'last':last,'startdate':startdate,'enddate':enddate,'starttime':starttime,'endtime':endtime},function (data) {
+        console.log(data);
+        console.log(JSON.parse(data.events));
+        $('#calendar').fullCalendar('addEventSource',JSON.parse(data.events));
+    });
+}
+
+var viewChange = function (view, element) {
+    var viewtype = view.name;
+    startdate = view.intervalStart.format("YYYY-MM-DD");
+    enddate = view.intervalEnd.format("YYYY-MM-DD");
+    starttime = view.intervalStart.format("HH:mm:ss");
+    endtime = view.intervalEnd.format("HH:mm:ss");
+    console.log("View: "+viewtype+" Start: "+startdate+" End: "+enddate);
+    getCal();
+}
+
 $(function() {
+    startdate = "2014-09-01";
+    enddate = "2014-10-01";
+    starttime = "00:00:00";
+    endtime = "00:00:00";
+    $('#idsubmit').click(getCal);
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        defaultDate: '2014-09-12',
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: [
-            {
-                title: 'All Day Event',
-                start: '2014-09-01'
-            },
-            {
-                title: 'Long Event',
-                start: '2014-09-07',
-                end: '2014-09-10'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2014-09-09T16:00:00'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2014-09-16T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: '2014-09-11',
-                end: '2014-09-13'
-            },
-            {
-                title: 'Meeting',
-                start: '2014-09-12T10:30:00',
-                end: '2014-09-12T12:30:00'
-            },
-            {
-                title: 'Lunch',
-                start: '2014-09-12T12:00:00'
-            },
-            {
-                title: 'Meeting',
-                start: '2014-09-12T14:30:00'
-            },
-            {
-                title: 'Happy Hour',
-                start: '2014-09-12T17:30:00'
-            },
-            {
-                title: 'Dinner',
-                start: '2014-09-12T20:00:00'
-            },
-            {
-                title: 'Birthday Party',
-                start: '2014-09-13T07:00:00'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2014-09-28'
-            }
-        ]
+        editable: false,
+        eventLimit: false, // allow "more" link when too many events
+        viewRender: viewChange
     });
 });
