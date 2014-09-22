@@ -1,6 +1,8 @@
 extends layout
 
 block head
+  link(rel='stylesheet', href='/css/bootstrap.css')
+  link(rel='stylesheet', href='/css/bootstrap.cerulean.min.css')
   script(src="/js/jquery.min.js")
   script(src="/js/moment.min.js")
   script(src="/js/fullcalendar.js")
@@ -18,17 +20,33 @@ block head
         });
     });
   link(rel='stylesheet', href='/css/fullcalendar.css')
+  link(rel='stylesheet', href='/css/ocal.css')
 
 block content
-  div(id="idform")
-    | First: 
-    input(type="text" id="firsttext")
-    br
-    | Last: 
-    input(type="text" id="lasttext")
-    br
-    button(type="button" id="idsubmit")
-      | Submit
-  br
-  br
-  div(id="calendar")
+  div(class="navbar navbar-default navbar-fixed-top" role="navigation")
+    div(class="container-fluid")
+      div(class="navbar-header")
+        a(class="navbar-brand" href="") oCal
+  div(class="container-fluid")
+    div(class="row")
+      div(class="col-sm-3 col-md-2 sidebar")
+        input(type="text" id="firstname" class="form-control nameinput" placeholder="First Name")
+        br
+        input(type="text" id="lastname" class="form-control nameinput" placeholder="Last Name")
+        br
+        button(type="button" class="btn btn-success" id="submit") Get Calendar
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" id="calendar")
+
+
+  //- div(id="idform")
+  //-   | First: 
+  //-   input(type="text" id="firsttext")
+  //-   br
+  //-   | Last: 
+  //-   input(type="text" id="lasttext")
+  //-   br
+  //-   button(type="button" id="idsubmit")
+  //-     | Submit
+  //- br
+  //- br
+  //- div(id="calendar")

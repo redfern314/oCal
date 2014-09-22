@@ -4,8 +4,8 @@ var starttime;
 var endtime;
 
 var getCal = function () {
-    var first = $('#firsttext').val();
-    var last = $('#lasttext').val();
+    var first = $('#firstname').val();
+    var last = $('#lastname').val();
     $('#calendar').fullCalendar('removeEvents');
     $.post('/cal',{'first':first,'last':last,'startdate':startdate,'enddate':enddate,'starttime':starttime,'endtime':endtime},function (data) {
         console.log(data);
@@ -29,15 +29,26 @@ $(function() {
     enddate = "2014-10-01";
     starttime = "00:00:00";
     endtime = "00:00:00";
-    $('#idsubmit').click(getCal);
+
+    // get calendar when submit is clicked or enter is pressed in textbox
+    $('#submit').click(getCal);
+    $('.nameinput').keypress(function (e) {
+        if (e.which == 13) {
+            getCal();
+            return false;
+        }
+    });
+
+    // display the calendar within the #calendar div
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        editable: false,
+        editable: false, // users cannot change events through UI
         eventLimit: false, // allow "more" link when too many events
-        viewRender: viewChange
+        viewRender: viewChange,
+        height: 'auto'
     });
 });
