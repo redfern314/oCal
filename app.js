@@ -36,7 +36,8 @@ var translate = function (ewsevents) {
         newdisplayevent.title = ewsevents[i].BusyType[0];
         newdisplayevent.start = ewsevents[i].StartTime[0];
         newdisplayevent.end = ewsevents[i].EndTime[0];
-        displayevents.push(newdisplayevent);
+        if(newdisplayevent.title != "Free")
+            displayevents.push(newdisplayevent);
     };
 
     return(displayevents);

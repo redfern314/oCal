@@ -24,6 +24,16 @@ var viewChange = function (view, element) {
     getCal();
 }
 
+var dayClick = function (date,jsEvent,view) {
+    $('#calendar').fullCalendar('changeView','agendaDay');
+    $('#calendar').fullCalendar('gotoDate',date);
+}
+
+var eventClick = function (event,jsEvent,view) {
+    $('#calendar').fullCalendar('changeView','agendaDay');
+    $('#calendar').fullCalendar('gotoDate',event.start);
+}
+
 $(function() {
     startdate = "2014-09-01";
     enddate = "2014-10-01";
@@ -47,8 +57,10 @@ $(function() {
             right: 'month,agendaWeek,agendaDay'
         },
         editable: false, // users cannot change events through UI
-        eventLimit: false, // allow "more" link when too many events
-        viewRender: viewChange,
-        height: 'auto'
+        eventLimit: true, // allow "more" link when too many events
+        viewRender: viewChange, // called when date range is changed
+        height: 'auto', // no scrollbar
+        dayClick: dayClick, // change view to that day when clicked
+        eventClick: eventClick
     });
 });
