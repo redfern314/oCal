@@ -26,6 +26,7 @@ block content
     div(class="container-fluid")
       div(class="navbar-header")
         a(class="navbar-brand" href="") oCal
+        h4(class="navbar-text") A better outlook for calendar sharing.
   div(class="container-fluid")
     div(class="row")
       div(class="col-sm-3 col-md-2 sidebar")
@@ -33,19 +34,12 @@ block content
         br
         input(type="text" id="lastname" class="form-control nameinput" placeholder="Last Name")
         br
+        input(type="radio" name="extension" value="student" checked) 
+        |  @students.olin.edu
+        br
+        input(type="radio" name="extension" value="other")
+        |  @olin.edu
+        br
+        br
         button(type="button" class="btn btn-success" id="submit") Get Calendar
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" id="calendar")
-
-
-  //- div(id="idform")
-  //-   | First: 
-  //-   input(type="text" id="firsttext")
-  //-   br
-  //-   | Last: 
-  //-   input(type="text" id="lasttext")
-  //-   br
-  //-   button(type="button" id="idsubmit")
-  //-     | Submit
-  //- br
-  //- br
-  //- div(id="calendar")

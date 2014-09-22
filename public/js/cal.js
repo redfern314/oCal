@@ -6,8 +6,10 @@ var endtime;
 var getCal = function () {
     var first = $('#firstname').val();
     var last = $('#lastname').val();
+    var extension = $('input[name=extension]:checked').val();
     $('#calendar').fullCalendar('removeEvents');
-    $.post('/cal',{'first':first,'last':last,'startdate':startdate,'enddate':enddate,'starttime':starttime,'endtime':endtime},function (data) {
+    $.post('/cal',{'first':first,'last':last,'startdate':startdate,'enddate':enddate,
+        'starttime':starttime,'endtime':endtime,'extension':extension},function (data) {
         console.log(data);
         console.log(JSON.parse(data.events));
         $('#calendar').fullCalendar('addEventSource',JSON.parse(data.events));
