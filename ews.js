@@ -7,7 +7,7 @@ var pd = require('pretty-data').pd;
 
 // Returns the availability of a given user in a specified datetime period
 //  Time arguments are optional - they default to 00:00:00 and 23:59:59
-exports.availability = function(username,startdate,enddate,starttime,endtime,callback) {
+exports.availability = function(credentials, username,startdate,enddate,starttime,endtime,callback) {
   fs.readFile("get_avail", 'utf8', function(err, datastring) {
     if (err) throw err;
 
@@ -17,7 +17,7 @@ exports.availability = function(username,startdate,enddate,starttime,endtime,cal
     datastring = datastring.replace("###EDATE###",enddate);
     datastring = datastring.replace("###ETIME###",endtime);
 
-    make_request(datastring,callback);
+    make_request(credentials, datastring,callback);
   });
 }
 
@@ -26,11 +26,11 @@ var availCallback = function(data,callback) {
 }
 
 // Make a request to the Exchange server
-var make_request = function(datastring,callback){
+var make_request = function(credentials, datastring,callback){
   var options = {
     hostname: 'webmail.olin.edu',
     port: 443,
-    auth: 'dredfern@olin.edu:'+process.env.EXCHANGE_SECRET,
+    auth: credentials.username+'@olin.edu:'+credentials.password,
     path: '/ews/exchange.asmx',
     method: 'POST',
     headers: {

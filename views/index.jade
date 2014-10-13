@@ -6,6 +6,7 @@ block head
   script(src="/js/moment.min.js")
   script(src="/js/fullcalendar.js")
   script(src="/js/cal.js")
+  script(src="/js/cookiesHelper.js")
   script(type="text/javascript").
     $(function() {
         $('#calendar').fullCalendar({
@@ -42,4 +43,12 @@ block content
         br
         br
         button(type="button" class="btn btn-success" id="submit") Get Calendar
+        br
+        br
+        input(type="text" id="username" class="form-control nameinput" placeholder="Username")
+        br
+        input(type="password" id="password" class="form-control nameinput" placeholder="Password")
+        br
+        button(type="button" class="btn btn-success" id="login") Login
+        button(type="button" class="btn btn-failure" id="logout" style="display: none;") Logout
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" id="calendar")

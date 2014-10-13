@@ -3,7 +3,13 @@ var enddate;
 var starttime;
 var endtime;
 
-var getCal = function () {
+var calRequest = function() {
+    checkAuth(getCal, function() {
+        alert("Please Login")
+    });
+}
+
+var getCal = function() { 
     var first = $('#firstname').val();
     var last = $('#lastname').val();
     var extension = $('input[name=extension]:checked').val();
@@ -13,6 +19,32 @@ var getCal = function () {
         console.log(data);
         console.log(JSON.parse(data.events));
         $('#calendar').fullCalendar('addEventSource',JSON.parse(data.events));
+    });
+    return false;
+}
+
+var addEvents = function(dataArrays) {
+    for (var i = 0; i < dataArrays.length; i++) {
+        $("#calendar").fullCalendar('addEventSource', JSON.parse(dataArrays[i].events));
+    }
+}
+
+var checkAuth = function(success, failure) {
+    $.get("/checkAuth", function(data) {
+        console.log(data);
+        if (data == "true") {
+            success();
+        } else {
+            failure();
+        }
+    });
+}
+
+var logout = function() {
+    $.get("/logout", function(data) {
+        $("#logout").hide();
+        $("#username").val("");
+        $("#password").val("");
     });
 }
 
@@ -36,6 +68,19 @@ var eventClick = function (event,jsEvent,view) {
     $('#calendar').fullCalendar('gotoDate',event.start);
 }
 
+var login = function() {
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.post("/login", {"username": username, "password": password}, function (data) {
+        if (data === "error") {
+            alert("Invalid Credentials")
+        }
+        $("#username").val("Logged in as "+ data);
+        $("#logout").show();
+    });
+}
+
+
 $(function() {
     startdate = "2014-09-01";
     enddate = "2014-10-01";
@@ -43,13 +88,15 @@ $(function() {
     endtime = "00:00:00";
 
     // get calendar when submit is clicked or enter is pressed in textbox
-    $('#submit').click(getCal);
+    $('#submit').click(calRequest);
     $('.nameinput').keypress(function (e) {
         if (e.which == 13) {
             getCal();
             return false;
         }
     });
+    $("#login").click(login);
+    $("#logout").click(logout);
 
     // display the calendar within the #calendar div
     $('#calendar').fullCalendar({
